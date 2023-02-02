@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { fetchData } from "../utils/fetchData";
 import { nanoid } from "nanoid";
 import Options from "./Options";
+import NextLevelBtn from "./NextLevelBtn";
 
 const QuestionList = ({ type }) => {
   const [questionAnswer, setQuestionAnswer] = useState([]);
@@ -9,18 +10,19 @@ const QuestionList = ({ type }) => {
   let levels = ["easy", "medium", "hard"];
   const [difficultyLevel, setDifficultyLevel] = useState(levels[0]);
   const [nextLevel, setNextLevel] = useState(false)
+  const [randomCategory, setRandomCategory] = useState(9)
 
   useEffect(() => {
     const fetchQuestionData = async () => {
       const questionData = await fetchData(
-        `https://opentdb.com/api.php?amount=1&category=16&difficulty=${difficultyLevel}&type=${type}`
+        `https://opentdb.com/api.php?amount=1&category=${randomCategory}&difficulty=${difficultyLevel}&type=${type}`
       );
       setQuestionAnswer(
         questionData.results.map((questionItem) => {
           const answer = questionItem.correct_answer;
           const options = [
             ...questionItem.incorrect_answers.map((incorrect) => incorrect),
-            answer
+            answer,
           ];
           return {
             id: id,
@@ -31,34 +33,30 @@ const QuestionList = ({ type }) => {
             difficulty: questionItem.difficulty,
             type: questionItem.type,
             showAnswer: false,
-            selectedAnswer: ''
+            selectedAnswer: "",
           };
         })
       );
     };
     fetchQuestionData();
-  }, []);
+    console.log(questionAnswer);
+    console.log(randomCategory);
+    //     if (questionAnswer.length > 0) {
+    //       setRandomCategory(8);
+    //     } 
+    // console.log(questionAnswer.category)
+  }, [randomCategory]);
   
     const handleSelectAnswer = (questionId, selectedAnswer) => {
-      console.log(questionId);
-      console.log(selectedAnswer);
       setNextLevel(true)
       setQuestionAnswer((prevQuestionAnswer) =>
-      prevQuestionAnswer.map((option) =>
-      option.id === questionId
-      ? { ...option, selectedAnswer: selectedAnswer, showAnswer: true}
-      : option
-      )
+        prevQuestionAnswer.map((option) =>
+        option.id === questionId
+        ? { ...option, selectedAnswer: selectedAnswer, showAnswer: true}
+        : option
+        )
       );
     };
-    console.log(questionAnswer);
-  
-  const getNextLevel = () => {
-    levels.shift()
-    setDifficultyLevel(levels[0])
-    setNextLevel(false)
-    console.log(questionAnswer)
-  }
 
   return (
     <div>
@@ -75,7 +73,17 @@ const QuestionList = ({ type }) => {
           />
         );
       })}
-      {nextLevel ? <button onClick={getNextLevel}>Next Level</button>: ''}
+      {nextLevel ? (
+        <NextLevelBtn
+          levels={levels}
+          setDifficultyLevel={setDifficultyLevel}
+          setNextLevel={setNextLevel}
+          setRandomCategory={setRandomCategory}
+          questionAnswer={questionAnswer}
+        />
+      ) : (
+        ""
+      )}
     </div>
   );
 };
