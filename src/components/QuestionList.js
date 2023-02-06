@@ -57,17 +57,18 @@ const QuestionList = ({ type }) => {
         ? { ...option, selectedAnswer: selectedAnswer, showAnswer: true}
       : option)
       );
+      getPointDifficulty();
       score(selectedAnswer, pointDifficulty)
-        setNextLevel(true)
+      setNextLevel(true)
     };
 
       const getPointDifficulty = () => {
           if(difficultyLevel==='easy'){
-            setGetPoint(5); }
+            setPointDifficulty(5); }
           else if(difficultyLevel==='medium'){
-            setGetPoint(10);}
+            setPointDifficulty(10);}
           else{
-            setGetPoint(15)
+            setPointDifficulty(15);
           }
       }
 

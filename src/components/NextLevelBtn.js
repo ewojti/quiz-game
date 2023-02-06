@@ -16,7 +16,6 @@ const NextLevelBtn = ({
     setDifficultyLevel(levels[0]);
     setNextLevel(false);
     getRandomNumbCat();
-    getPointDifficulty()
   };
 
 
