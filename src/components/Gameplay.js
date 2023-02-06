@@ -12,6 +12,7 @@ const Gameplay = ({
   const getGameplay = () =>{
     setGameplay(true)
   }  
+  
   const trueFalseGameplay = () => {
     setTrueFalseBtn(true);
     setThreeByThreeBtn(false);
@@ -25,6 +26,10 @@ const Gameplay = ({
     setType("multiple");
     getGameplay()
   };
+
+  const oneRandomCategory = () => {
+    
+  }
 
   return (
     <div>

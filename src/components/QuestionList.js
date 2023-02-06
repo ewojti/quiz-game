@@ -3,19 +3,24 @@ import { fetchData } from "../utils/fetchData";
 import { nanoid } from "nanoid";
 import Options from "./Options";
 import NextLevelBtn from "./NextLevelBtn";
+import Score from "./Score";
+import Health from "./Health";
 
 const QuestionList = ({ type }) => {
   const [questionAnswer, setQuestionAnswer] = useState([]);
   const id = nanoid()
   let levels = ["easy", "medium", "hard"];
+  const [amount, setAmount] = useState(1)
   const [difficultyLevel, setDifficultyLevel] = useState(levels[0]);
   const [nextLevel, setNextLevel] = useState(false)
-  const [randomCategory, setRandomCategory] = useState(9)
+  const [randomCategory, setRandomCategory] = useState(10)
+  const [getPoint, setGetPoint] = useState(0);
+  const [level, setLevel] = useState(1)
 
   useEffect(() => {
     const fetchQuestionData = async () => {
       const questionData = await fetchData(
-        `https://opentdb.com/api.php?amount=1&category=${randomCategory}&difficulty=${difficultyLevel}&type=${type}`
+        `https://opentdb.com/api.php?amount=${amount}&category=${randomCategory}&difficulty=${difficultyLevel}&type=${type}`
       );
       setQuestionAnswer(
         questionData.results.map((questionItem) => {
@@ -36,30 +41,45 @@ const QuestionList = ({ type }) => {
             selectedAnswer: "",
           };
         })
-      );
-    };
+        );
+        console.log(randomCategory);
+      };
     fetchQuestionData();
-    console.log(questionAnswer);
-    console.log(randomCategory);
-    //     if (questionAnswer.length > 0) {
-    //       setRandomCategory(8);
-    //     } 
-    // console.log(questionAnswer.category)
   }, [randomCategory]);
   
     const handleSelectAnswer = (questionId, selectedAnswer) => {
-      setNextLevel(true)
       setQuestionAnswer((prevQuestionAnswer) =>
-        prevQuestionAnswer.map((option) =>
-        option.id === questionId
-        ? { ...option, selectedAnswer: selectedAnswer, showAnswer: true}
-        : option
-        )
+      prevQuestionAnswer.map((option) =>
+      option.id === questionId
+      ? { ...option, selectedAnswer: selectedAnswer, showAnswer: true}
+      : option
+      )
       );
+      setTimeout(() => {
+      }
+      ,2000)
+      score(selectedAnswer)
+        setNextLevel(true)
     };
+
+      const score = (selected) => {
+        
+          questionAnswer.map((quest) => {
+            quest.answer === selected
+              ? setGetPoint((prevGetPoint) => prevGetPoint+=1)
+              : setGetPoint((prevGetPoint) => (prevGetPoint-=1))
+          })
+        }
+      
 
   return (
     <div>
+      <div>
+        <Score key={nanoid()} getPoint={getPoint} />
+        {questionAnswer.map((quest) => (
+          <p key={id}>{quest.category}</p>
+        ))}
+      </div>
       {questionAnswer.map((quest) => (
         <p key={id}>{quest.question}</p>
       ))}

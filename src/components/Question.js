@@ -5,6 +5,7 @@ import NextLevelBtn from "./NextLevelBtn";
 import Gameplay from "./Gameplay";
 import { nanoid } from "nanoid";
 import { isElementType } from "@testing-library/user-event/dist/utils";
+import Score from "./Score";
 
 
 const Question = (id) => {

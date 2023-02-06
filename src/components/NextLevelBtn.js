@@ -18,6 +18,7 @@ const NextLevelBtn = ({
     getRandomNumbCat();
   };
 
+
   return (
     <div>
       <button onClick={() => getNextLevel()}>Next Level</button>
