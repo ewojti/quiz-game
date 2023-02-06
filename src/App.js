@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import Question from "./components/Question";
+import StartPage from "./components/StartPage";
 import './App.css'
 
 const App = () => {
   return <div>
-    <Question />
+    <StartPage />
     </div>;
 };
 

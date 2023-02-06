@@ -5,7 +5,7 @@ import GameMode from "./GameMode";
 import { nanoid } from "nanoid";
 
 
-const Question = (id) => {
+const StartPage = (id) => {
       const [startGame, setStartGame] = useState(false)
       const [trueFalseBtn, setTrueFalseBtn] = useState(false)
       const [threeByThreeBtn, setThreeByThreeBtn] = useState(false);
@@ -43,4 +43,4 @@ const Question = (id) => {
   );
 };
 
-export default Question;
+export default StartPage;
