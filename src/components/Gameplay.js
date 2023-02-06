@@ -8,7 +8,7 @@ import Health from "./Health";
 import Level from './Level';
 import Difficulty from "./Difficulty";
 
-const QuestionList = ({ type, possibleLevels }) => {
+const Gameplay = ({ type, possibleLevels }) => {
   const [questionAnswer, setQuestionAnswer] = useState([]);
   const id = nanoid()
   let levels = ["easy", "medium", "hard"];
@@ -127,4 +127,4 @@ const QuestionList = ({ type, possibleLevels }) => {
   );
 };
 
-export default QuestionList;
+export default Gameplay;

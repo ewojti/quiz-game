@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import QuestionList from "./QuestionList";
+import Gameplay from "./Gameplay";
 import Menu from "./Menu";
 import GameMode from "./GameMode";
 import { nanoid } from "nanoid";
@@ -27,7 +27,7 @@ const Question = (id) => {
         ''
       )}
       {gameMode ? (
-        <QuestionList
+        <Gameplay
           key={nanoid()}
           type={type}
           possibleLevels={possibleLevels}
