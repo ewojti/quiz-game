@@ -1,46 +1,46 @@
 import React from 'react'
 
 
-const Gameplay = ({
+const GameMode = ({
   setThreeByThreeBtn,
   setTrueFalseBtn,
   setType,
-  setGameplay,
+  setGameMode,
   setPossibleLevels
 }) => {
 
 
-  const getGameplay = () =>{
-    setGameplay(true)
+  const getGameMode = () =>{
+    setGameMode(true)
   }  
   
-  const trueFalseGameplay = () => {
+  const trueFalseGameMode = () => {
     setTrueFalseBtn(true);
     setThreeByThreeBtn(false);
     setType("boolean");
     setPossibleLevels(10);
-    getGameplay()
+    getGameMode()
   };
 
-  const threeByThreeGameplay = () => {
+  const threeByThreeGameMode = () => {
     setThreeByThreeBtn(true);
     setTrueFalseBtn(false);
     setType("multiple");
     setPossibleLevels(15);
-    getGameplay()
+    getGameMode()
   };
 
   return (
     <div>
-      <h1>Choose Gameplay</h1>
-      <button id="trueFalseBtn" onClick={() => trueFalseGameplay()}>
+      <h1>Choose GameMode</h1>
+      <button id="trueFalseBtn" onClick={() => trueFalseGameMode()}>
         True/False
       </button>
-      <button id="threeByThreeBtn" onClick={() => threeByThreeGameplay()}>
+      <button id="threeByThreeBtn" onClick={() => threeByThreeGameMode()}>
         3 po 3
       </button>
     </div>
   );
 };
 
-export default Gameplay
+export default GameMode

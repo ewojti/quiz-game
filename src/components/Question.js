@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import QuestionList from "./QuestionList";
 import Menu from "./Menu";
-import Gameplay from "./Gameplay";
+import GameMode from "./GameMode";
 import { nanoid } from "nanoid";
 
 
@@ -9,24 +9,24 @@ const Question = (id) => {
       const [startGame, setStartGame] = useState(false)
       const [trueFalseBtn, setTrueFalseBtn] = useState(false)
       const [threeByThreeBtn, setThreeByThreeBtn] = useState(false);
-      const [gameplay, setGameplay] = useState(false);
+      const [gameMode, setGameMode] = useState(false);
       const [possibleLevels, setPossibleLevels] = useState(5);
       const [type, setType] = useState('')
 
   return (
     <div>
-      {startGame && gameplay === false ? (
-        <Gameplay
+      {startGame && gameMode === false ? (
+        <GameMode
           setThreeByThreeBtn={setThreeByThreeBtn}
           setTrueFalseBtn={setTrueFalseBtn}
           setType={setType}
-          setGameplay={setGameplay}
+          setGameMode={setGameMode}
           setPossibleLevels={setPossibleLevels}
         />
       ) : (
         ''
       )}
-      {gameplay ? (
+      {gameMode ? (
         <QuestionList
           key={nanoid()}
           type={type}
