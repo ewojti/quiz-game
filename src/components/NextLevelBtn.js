@@ -5,8 +5,9 @@ const NextLevelBtn = ({
   setDifficultyLevel,
   setNextLevel,
   setRandomCategory,
-  getPointDifficulty
+  questionAnswer
 }) => {
+
   const getRandomNumbCat = () => {
     setRandomCategory(Math.floor(Math.random() * 22) + 10);
   };
@@ -17,7 +18,6 @@ const NextLevelBtn = ({
     setNextLevel(false);
     getRandomNumbCat();
   };
-
 
   return (
     <div>

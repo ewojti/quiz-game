@@ -1,8 +1,8 @@
 import React from 'react'
 
-const Level = ({level}) => {
+const Level = ({level, possibleLevels}) => {
   return (
-    <div>Level: {level}</div>
+    <div>Level: {level}/{possibleLevels}</div>
   )
 }
 

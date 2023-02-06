@@ -8,7 +8,7 @@ import Health from "./Health";
 import Level from './Level';
 import Difficulty from "./Difficulty";
 
-const QuestionList = ({ type }) => {
+const QuestionList = ({ type, possibleLevels }) => {
   const [questionAnswer, setQuestionAnswer] = useState([]);
   const id = nanoid()
   let levels = ["easy", "medium", "hard"];
@@ -57,8 +57,8 @@ const QuestionList = ({ type }) => {
         ? { ...option, selectedAnswer: selectedAnswer, showAnswer: true}
       : option)
       );
-      getPointDifficulty();
       score(selectedAnswer, pointDifficulty)
+      getPointDifficulty();
       setNextLevel(true)
     };
 
@@ -74,9 +74,13 @@ const QuestionList = ({ type }) => {
 
       const score = (selected, point) => {
           questionAnswer.map((quest) => {
-            quest.answer === selected
-              ? setGetPoint((prevGetPoint) => (prevGetPoint +=point))
-              : setGetPoint((prevGetPoint) => (prevGetPoint -=point));
+            if(quest.answer === selected){
+              setGetPoint((prevGetPoint) => (prevGetPoint +=point))
+              setLevel(prevLevel => prevLevel += 1)
+            }
+              else {
+                setGetPoint((prevGetPoint) => (prevGetPoint -=point))
+              }
           })
         }
       
@@ -88,7 +92,10 @@ const QuestionList = ({ type }) => {
         {questionAnswer.map((quest) => (
           <p key={id}>{quest.category}</p>
         ))}
-        <Level level={level} />
+        <Level 
+        level={level} 
+        possibleLevels={possibleLevels} 
+        />
         <Difficulty difficultyLevel={difficultyLevel} />
       </div>
       {questionAnswer.map((quest) => (

@@ -5,7 +5,8 @@ const Gameplay = ({
   setThreeByThreeBtn,
   setTrueFalseBtn,
   setType,
-  setGameplay
+  setGameplay,
+  setPossibleLevels
 }) => {
 
 
@@ -17,6 +18,7 @@ const Gameplay = ({
     setTrueFalseBtn(true);
     setThreeByThreeBtn(false);
     setType("boolean");
+    setPossibleLevels(10);
     getGameplay()
   };
 
@@ -24,12 +26,9 @@ const Gameplay = ({
     setThreeByThreeBtn(true);
     setTrueFalseBtn(false);
     setType("multiple");
+    setPossibleLevels(15);
     getGameplay()
   };
-
-  const oneRandomCategory = () => {
-    
-  }
 
   return (
     <div>

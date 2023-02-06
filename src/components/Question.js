@@ -1,11 +1,8 @@
-import React, {useState, useEffect} from "react";
+import React, {useState} from "react";
 import QuestionList from "./QuestionList";
 import Menu from "./Menu";
-import NextLevelBtn from "./NextLevelBtn";
 import Gameplay from "./Gameplay";
 import { nanoid } from "nanoid";
-import { isElementType } from "@testing-library/user-event/dist/utils";
-import Score from "./Score";
 
 
 const Question = (id) => {
@@ -13,7 +10,7 @@ const Question = (id) => {
       const [trueFalseBtn, setTrueFalseBtn] = useState(false)
       const [threeByThreeBtn, setThreeByThreeBtn] = useState(false);
       const [gameplay, setGameplay] = useState(false);
-
+      const [possibleLevels, setPossibleLevels] = useState(5);
       const [type, setType] = useState('')
 
   return (
@@ -24,12 +21,17 @@ const Question = (id) => {
           setTrueFalseBtn={setTrueFalseBtn}
           setType={setType}
           setGameplay={setGameplay}
+          setPossibleLevels={setPossibleLevels}
         />
       ) : (
-        ""
+        ''
       )}
       {gameplay ? (
-        <QuestionList key={nanoid()} type={type} />
+        <QuestionList
+          key={nanoid()}
+          type={type}
+          possibleLevels={possibleLevels}
+        />
       ) : trueFalseBtn === false &&
         threeByThreeBtn === false &&
         startGame === false ? (
