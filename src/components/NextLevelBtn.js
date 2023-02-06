@@ -5,7 +5,7 @@ const NextLevelBtn = ({
   setDifficultyLevel,
   setNextLevel,
   setRandomCategory,
-  questionAnswer
+  getPointDifficulty
 }) => {
   const getRandomNumbCat = () => {
     setRandomCategory(Math.floor(Math.random() * 22) + 10);
@@ -16,6 +16,7 @@ const NextLevelBtn = ({
     setDifficultyLevel(levels[0]);
     setNextLevel(false);
     getRandomNumbCat();
+    getPointDifficulty()
   };
 
 

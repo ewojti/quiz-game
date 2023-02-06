@@ -5,6 +5,8 @@ import Options from "./Options";
 import NextLevelBtn from "./NextLevelBtn";
 import Score from "./Score";
 import Health from "./Health";
+import Level from './Level';
+import Difficulty from "./Difficulty";
 
 const QuestionList = ({ type }) => {
   const [questionAnswer, setQuestionAnswer] = useState([]);
@@ -15,7 +17,8 @@ const QuestionList = ({ type }) => {
   const [nextLevel, setNextLevel] = useState(false)
   const [randomCategory, setRandomCategory] = useState(10)
   const [getPoint, setGetPoint] = useState(0);
-  const [level, setLevel] = useState(1)
+  const [level, setLevel] = useState(1);
+  const [pointDifficulty, setPointDifficulty] = useState(1)
 
   useEffect(() => {
     const fetchQuestionData = async () => {
@@ -49,25 +52,30 @@ const QuestionList = ({ type }) => {
   
     const handleSelectAnswer = (questionId, selectedAnswer) => {
       setQuestionAnswer((prevQuestionAnswer) =>
-      prevQuestionAnswer.map((option) =>
-      option.id === questionId
-      ? { ...option, selectedAnswer: selectedAnswer, showAnswer: true}
-      : option
-      )
+        prevQuestionAnswer.map((option) =>
+        option.id === questionId
+        ? { ...option, selectedAnswer: selectedAnswer, showAnswer: true}
+      : option)
       );
-      setTimeout(() => {
-      }
-      ,2000)
-      score(selectedAnswer)
+      score(selectedAnswer, pointDifficulty)
         setNextLevel(true)
     };
 
-      const score = (selected) => {
-        
+      const getPointDifficulty = () => {
+          if(difficultyLevel==='easy'){
+            setGetPoint(5); }
+          else if(difficultyLevel==='medium'){
+            setGetPoint(10);}
+          else{
+            setGetPoint(15)
+          }
+      }
+
+      const score = (selected, point) => {
           questionAnswer.map((quest) => {
             quest.answer === selected
-              ? setGetPoint((prevGetPoint) => prevGetPoint+=1)
-              : setGetPoint((prevGetPoint) => (prevGetPoint-=1))
+              ? setGetPoint((prevGetPoint) => (prevGetPoint +=point))
+              : setGetPoint((prevGetPoint) => (prevGetPoint -=point));
           })
         }
       
@@ -79,6 +87,8 @@ const QuestionList = ({ type }) => {
         {questionAnswer.map((quest) => (
           <p key={id}>{quest.category}</p>
         ))}
+        <Level level={level} />
+        <Difficulty difficultyLevel={difficultyLevel} />
       </div>
       {questionAnswer.map((quest) => (
         <p key={id}>{quest.question}</p>
@@ -100,6 +110,7 @@ const QuestionList = ({ type }) => {
           setNextLevel={setNextLevel}
           setRandomCategory={setRandomCategory}
           questionAnswer={questionAnswer}
+          getPointDifficulty={getPointDifficulty}
         />
       ) : (
         ""
