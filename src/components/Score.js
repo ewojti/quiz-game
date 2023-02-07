@@ -1,8 +1,6 @@
 import React from 'react'
 
-const Score = ({ item, getPoint, setGetPoint }) => {
-
-
+const Score = ({ getPoint }) => {
 
   return <div>Score: {getPoint}</div>;
 };
