@@ -1,11 +1,13 @@
 import React from 'react'
 
 const NextLevelBtn = ({
-  levels,
   setDifficultyLevel,
   setNextLevel,
   setRandomCategory,
-  questionAnswer
+  setLevel,
+  questionAnswer,
+  isGameOver,
+  isEndGame
 }) => {
 
   const getRandomNumbCat = () => {
@@ -13,15 +15,16 @@ const NextLevelBtn = ({
   };
 
   const getNextLevel = () => {
-    levels.shift();
-    setDifficultyLevel(levels[0]);
     setNextLevel(false);
     getRandomNumbCat();
+    setLevel((prevLevel) => (prevLevel += 1));
   };
 
   return (
     <div>
-      <button onClick={() => getNextLevel()}>Next Level</button>
+      <button onClick={() => getNextLevel()}>
+        {isEndGame ? "End game" : "Next Level"}
+      </button>
     </div>
   );
 };
