@@ -3,6 +3,7 @@ import { fetchData } from "../utils/fetchData";
 import { nanoid } from "nanoid";
 import Options from "./Options";
 import NextLevelBtn from "./NextLevelBtn";
+import EndGameBtn from "./EndGameBtn";
 import Score from "./Score";
 import Health from "./Health";
 import Level from './Level';
@@ -26,7 +27,6 @@ const Gameplay = ({
   const [getPoint, setGetPoint] = useState(0);
   const [level, setLevel] = useState(1);
   const [pointDifficulty, setPointDifficulty] = useState(5);
-  const [health, setHealth] = useState(["❤️", "❤️", "❤️"]);
 
   const fetchQuestionData = async () => {
     const questionData = await fetchData(
@@ -55,11 +55,9 @@ const Gameplay = ({
   };
 
   useEffect(() => {
-    if (isEndGame === false || isGameOver === false) {
       fetchQuestionData();
       getPointDifficulty();
-    }
-    endGame()
+    // endGame()
   }, [randomCategory]);
 
 
@@ -71,8 +69,8 @@ const Gameplay = ({
           : option
       )
     );
-    score(selectedAnswer, pointDifficulty);
-    setNextLevel(true);
+      score(selectedAnswer, pointDifficulty);
+      setNextLevel(true);
   };
 
   const getPointDifficulty = () => {
@@ -85,6 +83,7 @@ const Gameplay = ({
     }
   };
 
+
   const score = (selected, point) => {
     questionAnswer.map((quest) => {
       if (quest.answer === selected) {
@@ -96,9 +95,8 @@ const Gameplay = ({
   };
 
   const endGame = () => {
-    if (level > possibleLevels){
+    if (level > possibleLevels && nextLevel===false){
       setIsEndGame(true);
-      setGameMode(false)
     } else if (getPoint < -5){
       setIsGameOver(true);
       setGameMode(false)
@@ -115,7 +113,7 @@ const Gameplay = ({
         ))}
         <Level level={level} possibleLevels={possibleLevels} />
         <Difficulty difficultyLevel={difficultyLevel} />
-        <Health health={health} />
+        <div>Health: {isStillAlive}</div>
       </div>
       {questionAnswer.map((quest) => (
         <p key={id}>{quest.question}</p>
@@ -130,7 +128,7 @@ const Gameplay = ({
           />
         );
       })}
-      {nextLevel ? (
+      {nextLevel && isEndGame === false ? (
         <NextLevelBtn
           setDifficultyLevel={setDifficultyLevel}
           setNextLevel={setNextLevel}
@@ -139,8 +137,9 @@ const Gameplay = ({
           questionAnswer={questionAnswer}
           getPointDifficulty={getPointDifficulty}
           isEndGame={isEndGame}
-          isGameOver={isGameOver}
         />
+      ) : nextLevel === false && isEndGame ? (
+        <EndGameBtn setGameMode={setGameMode} />
       ) : (
         ""
       )}

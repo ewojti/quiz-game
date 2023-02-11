@@ -49,7 +49,7 @@ const StartPage = (id) => {
         threeByThreeBtn === false &&
         startGame === false ? (
         <Menu setStartGame={setStartGame} />
-      ) : isEndGame ? (
+      ) : isEndGame && gameMode === false ? (
         <EndGame
           setIsGameOver={setIsGameOver}
           setIsEndGame={setIsEndGame}
@@ -57,8 +57,6 @@ const StartPage = (id) => {
           setThreeByThreeBtn={setThreeByThreeBtn}
           setStartGame={setStartGame}
         />
-      ) : isGameOver ? (
-        <GameOver />
       ) : (
         ""
       )}
