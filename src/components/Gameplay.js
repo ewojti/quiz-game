@@ -113,7 +113,7 @@ const Gameplay = ({
         ))}
         <Level level={level} possibleLevels={possibleLevels} />
         <Difficulty difficultyLevel={difficultyLevel} />
-        <div>Health: {isStillAlive}</div>
+        <div>Health: </div>
       </div>
       {questionAnswer.map((quest) => (
         <p key={id}>{quest.question}</p>
