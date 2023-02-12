@@ -6,26 +6,28 @@ import EndGame from "./EndGame";
 import { nanoid } from "nanoid";
 
 
-const StartPage = (id) => {
-      const [startGame, setStartGame] = useState(false)
-      const [trueFalseBtn, setTrueFalseBtn] = useState(false)
-      const [threeByThreeBtn, setThreeByThreeBtn] = useState(false);
+const StartPage = () => {
+      const [startGame, setStartGame] = useState(false);
       const [isGameModeData, setIsGameModeData] = useState(false)
       const [gameMode, setGameMode] = useState(false);
       const [possibleLevels, setPossibleLevels] = useState(5);
-      const [type, setType] = useState('');
+      const [difficultyLevel, setDifficultyLevel] = useState();
+      const [type, setType] = useState();
       const [isEndGame, setIsEndGame] = useState(false);
+      const [getChances, setGetChances] = useState()
+
+
 
   return (
     <div>
       {startGame && gameMode === false && isEndGame === false ? (
         <GameMode
-          setThreeByThreeBtn={setThreeByThreeBtn}
-          setTrueFalseBtn={setTrueFalseBtn}
           setIsGameModeData={setIsGameModeData}
           setType={setType}
           setGameMode={setGameMode}
           setPossibleLevels={setPossibleLevels}
+          setDifficultyLevel={setDifficultyLevel}
+          setGetChances={setGetChances}
         />
       ) : (
         ""
@@ -35,19 +37,20 @@ const StartPage = (id) => {
           key={nanoid()}
           type={type}
           possibleLevels={possibleLevels}
+          difficultyLevel={difficultyLevel}
           isEndGame={isEndGame}
           setIsEndGame={setIsEndGame}
           gameMode={gameMode}
           setGameMode={setGameMode}
+          getChances={getChances}
+          setGetChances={setGetChances}
         />
-      ) : isGameModeData === false &&
-        startGame === false ? (
+      ) : isGameModeData === false && startGame === false ? (
         <Menu setStartGame={setStartGame} />
       ) : isEndGame && gameMode === false ? (
         <EndGame
           setIsEndGame={setIsEndGame}
-          setTrueFalseBtn={setTrueFalseBtn}
-          setThreeByThreeBtn={setThreeByThreeBtn}
+          setIsGameModeData={setIsGameModeData}
           setStartGame={setStartGame}
         />
       ) : (

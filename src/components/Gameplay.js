@@ -5,6 +5,7 @@ import { nanoid } from "nanoid";
 import Options from "./Options";
 import NextLevelBtn from "./NextLevelBtn";
 import EndGameBtn from "./EndGameBtn";
+import RepeatLevelBtn from "./RepeatLevelBtn";
 import Score from "./Score";
 import Health from "./Health";
 import Level from './Level';
@@ -14,22 +15,23 @@ import Difficulty from "./Difficulty";
 const Gameplay = ({
   type,
   possibleLevels,
+  difficultyLevel,
   isEndGame,
   setIsEndGame,
-  setGameMode
+  setGameMode,
+  getChances,
+  setGetChances
 }) => {
   const [questionAnswer, setQuestionAnswer] = useState([]);
   const id = nanoid();
   const [amount, setAmount] = useState(1);
-  const [difficultyLevel, setDifficultyLevel] = useState("hard");
   const [nextLevel, setNextLevel] = useState(false);
-  const [randomCategory, setRandomCategory] = useState(10);
+  const [randomCategory, setRandomCategory] = useState(26);
   const [getPoint, setGetPoint] = useState(0);
   const [level, setLevel] = useState(1);
   const [pointDifficulty, setPointDifficulty] = useState(5);
   const [lastLvlAnsw, setLastLvlAnsw] = useState(false);
-  // const [isGameOver, setIsGameOver] = useState(false);
-
+  const [repeatLevel, setRepeatLevel] = useState(false);
 
   const fetchQuestionData = async () => {
     const questionData = await fetchData(
@@ -58,10 +60,10 @@ const Gameplay = ({
   };
 
   useEffect(() => {
-      fetchQuestionData();
-      getPointDifficulty();
+    fetchQuestionData();
+    getPointDifficulty();
+    console.log(randomCategory);
   }, [randomCategory]);
-
 
   const handleSelectAnswer = (questionId, selectedAnswer) => {
     setQuestionAnswer((prevQuestionAnswer) =>
@@ -71,16 +73,19 @@ const Gameplay = ({
           : option
       )
     );
-      score(selectedAnswer, pointDifficulty);
-      questionAnswer.map((quest) => {
-        if(possibleLevels === level && quest.answer===selectedAnswer){
-          setLastLvlAnsw(true)
-        } else if (possibleLevels > level) {
-          setNextLevel(true);
-        } else if (possibleLevels === level && quest.answer !== selectedAnswer){
-          setNextLevel(true)
-        } 
-      })
+    score(selectedAnswer, pointDifficulty);
+    questionAnswer.map((quest) => {
+      if (possibleLevels === level && quest.answer === selectedAnswer) {
+        setLastLvlAnsw(true);
+      } else if (possibleLevels > level && quest.answer === selectedAnswer) {
+        setNextLevel(true);
+      } else if (possibleLevels === level && quest.answer !== selectedAnswer) {
+        setNextLevel(true);
+      } else if (possibleLevels > level && quest.answer !== selectedAnswer) {
+        setRepeatLevel(true)
+        setNextLevel(false);
+      }
+    });
   };
 
   const getPointDifficulty = () => {
@@ -93,7 +98,6 @@ const Gameplay = ({
     }
   };
 
-
   const score = (selected, point) => {
     questionAnswer.map((quest) => {
       if (quest.answer === selected) {
@@ -104,13 +108,6 @@ const Gameplay = ({
     });
   };
 
-  const getChances = (heart) => {
-    const chances = new Array(heart).fill("❤️");
-    chances.map((life) => (
-      `<div>${life}</div>`
-    ))
-  }
-
   return (
     <div>
       <div>
@@ -120,7 +117,7 @@ const Gameplay = ({
         ))}
         <Level level={level} possibleLevels={possibleLevels} />
         <Difficulty difficultyLevel={difficultyLevel} />
-        <div>Health: </div>
+        <div>Health: {getChances}</div>
       </div>
       {questionAnswer.map((quest) => (
         <p key={id}>{quest.question}</p>
@@ -135,9 +132,8 @@ const Gameplay = ({
           />
         );
       })}
-      {nextLevel ? (
+      {nextLevel? (
         <NextLevelBtn
-          setDifficultyLevel={setDifficultyLevel}
           setNextLevel={setNextLevel}
           setLevel={setLevel}
           level={level}
@@ -147,7 +143,7 @@ const Gameplay = ({
           getPointDifficulty={getPointDifficulty}
           isEndGame={isEndGame}
         />
-      ) : lastLvlAnsw ? (
+        ) : lastLvlAnsw ? (
         <EndGameBtn setIsEndGame={setIsEndGame} setGameMode={setGameMode} />
       ) : (
         ""

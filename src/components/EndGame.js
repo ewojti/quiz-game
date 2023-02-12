@@ -1,16 +1,13 @@
-import React from 'react'
-import NewGameBtn from "./NewGameBtn";
+import React from 'react';
 
 
 const EndGame = ({
   setIsEndGame,
-  setTrueFalseBtn,
-  setThreeByThreeBtn,
+  setIsGameModeData,
   setStartGame
 }) => {
   const resetGame = () => {
-    setTrueFalseBtn(false);
-    setThreeByThreeBtn(false);
+    setIsGameModeData(false);
     setStartGame(false);
     setIsEndGame(false);
     console.log('reset')
