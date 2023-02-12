@@ -3,7 +3,6 @@ import NewGameBtn from "./NewGameBtn";
 
 
 const EndGame = ({
-  setIsGameOver,
   setIsEndGame,
   setTrueFalseBtn,
   setThreeByThreeBtn,
@@ -14,7 +13,6 @@ const EndGame = ({
     setThreeByThreeBtn(false);
     setStartGame(false);
     setIsEndGame(false);
-    setIsGameOver(false);
     console.log('reset')
   };
 

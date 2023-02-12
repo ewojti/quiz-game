@@ -10,6 +10,7 @@ const StartPage = (id) => {
       const [startGame, setStartGame] = useState(false)
       const [trueFalseBtn, setTrueFalseBtn] = useState(false)
       const [threeByThreeBtn, setThreeByThreeBtn] = useState(false);
+      const [isGameModeData, setIsGameModeData] = useState(false)
       const [gameMode, setGameMode] = useState(false);
       const [possibleLevels, setPossibleLevels] = useState(5);
       const [type, setType] = useState('');
@@ -17,12 +18,11 @@ const StartPage = (id) => {
 
   return (
     <div>
-      {startGame &&
-      gameMode === false &&
-      isEndGame === false ? (
+      {startGame && gameMode === false && isEndGame === false ? (
         <GameMode
           setThreeByThreeBtn={setThreeByThreeBtn}
           setTrueFalseBtn={setTrueFalseBtn}
+          setIsGameModeData={setIsGameModeData}
           setType={setType}
           setGameMode={setGameMode}
           setPossibleLevels={setPossibleLevels}
@@ -40,8 +40,7 @@ const StartPage = (id) => {
           gameMode={gameMode}
           setGameMode={setGameMode}
         />
-      ) : trueFalseBtn === false &&
-        threeByThreeBtn === false &&
+      ) : isGameModeData === false &&
         startGame === false ? (
         <Menu setStartGame={setStartGame} />
       ) : isEndGame && gameMode === false ? (

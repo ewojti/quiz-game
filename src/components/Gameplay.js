@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useRef} from "react";
+import React, { useState, useEffect } from "react";
 import { fetchData } from "../utils/fetchData";
+import { gameModeData } from '../utils/gameModeData';
 import { nanoid } from "nanoid";
 import Options from "./Options";
 import NextLevelBtn from "./NextLevelBtn";
@@ -8,6 +9,7 @@ import Score from "./Score";
 import Health from "./Health";
 import Level from './Level';
 import Difficulty from "./Difficulty";
+
 
 const Gameplay = ({
   type,
@@ -26,7 +28,7 @@ const Gameplay = ({
   const [level, setLevel] = useState(1);
   const [pointDifficulty, setPointDifficulty] = useState(5);
   const [lastLvlAnsw, setLastLvlAnsw] = useState(false);
-  const [isGameOver, setIsGameOver] = useState(false);
+  // const [isGameOver, setIsGameOver] = useState(false);
 
 
   const fetchQuestionData = async () => {
@@ -41,7 +43,7 @@ const Gameplay = ({
           answer,
         ];
         return {
-          id: id,
+          id: nanoid(),
           category: questionItem.category,
           question: questionItem.question,
           answer: answer,
@@ -58,7 +60,6 @@ const Gameplay = ({
   useEffect(() => {
       fetchQuestionData();
       getPointDifficulty();
-      console.log(randomCategory);
   }, [randomCategory]);
 
 
@@ -103,6 +104,12 @@ const Gameplay = ({
     });
   };
 
+  const getChances = (heart) => {
+    const chances = new Array(heart).fill("❤️");
+    chances.map((life) => (
+      `<div>${life}</div>`
+    ))
+  }
 
   return (
     <div>

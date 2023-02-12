@@ -1,44 +1,36 @@
-import React from 'react'
+import React from 'react';
+import {gameModeData} from '../utils/gameModeData';
+import { nanoid } from "nanoid";
 
 
 const GameMode = ({
-  setThreeByThreeBtn,
-  setTrueFalseBtn,
+  setIsGameModeData,
   setType,
   setGameMode,
   setPossibleLevels
 }) => {
 
-
   const getGameMode = () =>{
     setGameMode(true)
-  }  
-  
-  const trueFalseGameMode = () => {
-    setTrueFalseBtn(true);
-    setThreeByThreeBtn(false);
-    setType("boolean");
-    setPossibleLevels(5);
-    getGameMode()
-  };
+  }
 
-  const threeByThreeGameMode = () => {
-    setThreeByThreeBtn(true);
-    setTrueFalseBtn(false);
-    setType("multiple");
-    setPossibleLevels(3);
+  const pickGameMode = (on) => {
+    console.log(on)
+    setIsGameModeData(true)
+    setType(gameModeData[on].type);
+    setPossibleLevels(gameModeData[on].possibleLevels);
     getGameMode()
-  };
+  }
+
 
   return (
     <div>
       <h1>Choose GameMode</h1>
-      <button id="trueFalseBtn" onClick={() => trueFalseGameMode()}>
-        True/False
-      </button>
-      <button id="threeByThreeBtn" onClick={() => threeByThreeGameMode()}>
-        3 po 3
-      </button>
+    {gameModeData.map((item)=> (
+          <button key={nanoid()} id="third" onClick={() => pickGameMode(gameModeData.indexOf(item))}>
+            {item.name}
+          </button>
+    ))}
     </div>
   );
 };
