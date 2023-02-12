@@ -18,7 +18,7 @@ const GameMode = ({
     setTrueFalseBtn(true);
     setThreeByThreeBtn(false);
     setType("boolean");
-    setPossibleLevels(10);
+    setPossibleLevels(5);
     getGameMode()
   };
 

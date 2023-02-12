@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef} from "react";
 import { fetchData } from "../utils/fetchData";
 import { nanoid } from "nanoid";
 import Options from "./Options";
@@ -12,8 +12,6 @@ import Difficulty from "./Difficulty";
 const Gameplay = ({
   type,
   possibleLevels,
-  isGameOver,
-  setIsGameOver,
   isEndGame,
   setIsEndGame,
   setGameMode
@@ -27,6 +25,9 @@ const Gameplay = ({
   const [getPoint, setGetPoint] = useState(0);
   const [level, setLevel] = useState(1);
   const [pointDifficulty, setPointDifficulty] = useState(5);
+  const [lastLvlAnsw, setLastLvlAnsw] = useState(false);
+  const [isGameOver, setIsGameOver] = useState(false);
+
 
   const fetchQuestionData = async () => {
     const questionData = await fetchData(
@@ -57,7 +58,7 @@ const Gameplay = ({
   useEffect(() => {
       fetchQuestionData();
       getPointDifficulty();
-    // endGame()
+      console.log(randomCategory);
   }, [randomCategory]);
 
 
@@ -70,7 +71,15 @@ const Gameplay = ({
       )
     );
       score(selectedAnswer, pointDifficulty);
-      setNextLevel(true);
+      questionAnswer.map((quest) => {
+        if(possibleLevels === level && quest.answer===selectedAnswer){
+          setLastLvlAnsw(true)
+        } else if (possibleLevels > level) {
+          setNextLevel(true);
+        } else if (possibleLevels === level && quest.answer !== selectedAnswer){
+          setNextLevel(true)
+        } 
+      })
   };
 
   const getPointDifficulty = () => {
@@ -92,15 +101,6 @@ const Gameplay = ({
         setGetPoint((prevGetPoint) => (prevGetPoint -= point));
       }
     });
-  };
-
-  const endGame = () => {
-    if (level > possibleLevels && nextLevel===false){
-      setIsEndGame(true);
-    } else if (getPoint < -5){
-      setIsGameOver(true);
-      setGameMode(false)
-    }
   };
 
 
@@ -128,18 +128,20 @@ const Gameplay = ({
           />
         );
       })}
-      {nextLevel && isEndGame === false ? (
+      {nextLevel ? (
         <NextLevelBtn
           setDifficultyLevel={setDifficultyLevel}
           setNextLevel={setNextLevel}
           setLevel={setLevel}
+          level={level}
+          possibleLevels={possibleLevels}
           setRandomCategory={setRandomCategory}
           questionAnswer={questionAnswer}
           getPointDifficulty={getPointDifficulty}
           isEndGame={isEndGame}
         />
-      ) : nextLevel === false && isEndGame ? (
-        <EndGameBtn setGameMode={setGameMode} />
+      ) : lastLvlAnsw ? (
+        <EndGameBtn setIsEndGame={setIsEndGame} setGameMode={setGameMode} />
       ) : (
         ""
       )}

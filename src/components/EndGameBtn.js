@@ -1,14 +1,15 @@
 import React from 'react'
 
-const EndGameBtn = ({setGameMode}) => {
+const EndGameBtn = ({ setGameMode, setIsEndGame }) => {
   const getEndGame = () => {
-      setGameMode(false);
-  }
+    setGameMode(false);
+    setIsEndGame(true);
+  };
   return (
     <div>
-      <button onClick={() => setGameMode(false)}>End Game</button>
+      <button onClick={() => getEndGame()}>End Game</button>
     </div>
   );
-}
+};
 
 export default EndGameBtn
