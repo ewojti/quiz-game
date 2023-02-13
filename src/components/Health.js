@@ -1,9 +1,7 @@
 import React from 'react'
 
-const Health = ({health}) => {
-  return (
-    <div>Health: {health}</div>
-  )
+const Health = ({getChances}) => {
+  return <div>Health: {getChances}</div>;
 }
 
 export default Health

@@ -79,11 +79,9 @@ const Gameplay = ({
         setLastLvlAnsw(true);
       } else if (possibleLevels > level && quest.answer === selectedAnswer) {
         setNextLevel(true);
-      } else if (possibleLevels === level && quest.answer !== selectedAnswer) {
-        setNextLevel(true);
-      } else if (possibleLevels > level && quest.answer !== selectedAnswer) {
-        setRepeatLevel(true)
-        setNextLevel(false);
+      } else if (possibleLevels >= level && quest.answer !== selectedAnswer) {
+        setRepeatLevel(true);
+        // setGetChances((heart) => heart.filter((_, index) => index !== 0));
       }
     });
   };
@@ -108,6 +106,10 @@ const Gameplay = ({
     });
   };
 
+  const getRandomNumbCat = () => {
+    setRandomCategory(Math.floor(Math.random() * 22) + 10);
+  };
+
   return (
     <div>
       <div>
@@ -117,7 +119,7 @@ const Gameplay = ({
         ))}
         <Level level={level} possibleLevels={possibleLevels} />
         <Difficulty difficultyLevel={difficultyLevel} />
-        <div>Health: {getChances}</div>
+        <Health getChances={getChances} />
       </div>
       {questionAnswer.map((quest) => (
         <p key={id}>{quest.question}</p>
@@ -132,7 +134,7 @@ const Gameplay = ({
           />
         );
       })}
-      {nextLevel? (
+      {nextLevel ? (
         <NextLevelBtn
           setNextLevel={setNextLevel}
           setLevel={setLevel}
@@ -142,9 +144,16 @@ const Gameplay = ({
           questionAnswer={questionAnswer}
           getPointDifficulty={getPointDifficulty}
           isEndGame={isEndGame}
+          getRandomNumbCat={getRandomNumbCat}
         />
-        ) : lastLvlAnsw ? (
+      ) : lastLvlAnsw ? (
         <EndGameBtn setIsEndGame={setIsEndGame} setGameMode={setGameMode} />
+      ) : repeatLevel ? (
+        <RepeatLevelBtn
+          getRandomNumbCat={getRandomNumbCat}
+          setRepeatLevel={setRepeatLevel}
+          setGetChances={setGetChances}
+        />
       ) : (
         ""
       )}

@@ -1,26 +1,16 @@
 import React from 'react'
 
 const NextLevelBtn = ({
-  level,
-  possibleLevels,
   setNextLevel,
-  setRandomCategory,
   setLevel,
+  getRandomNumbCat
 }) => {
-  const getRandomNumbCat = () => {
-    setRandomCategory(Math.floor(Math.random() * 22) + 10);
-  };
+
 
   const getNextLevel = () => {
     setNextLevel(false);
     getRandomNumbCat();
-    if (possibleLevels === level) {
-      setLevel((prevLevel) => (prevLevel += 0));
-    } else if (possibleLevels > level) {
-      setLevel((prevLevel) => (prevLevel += 1));
-    } else if (possibleLevels > level) {
-      setLevel((prevLevel) => (prevLevel += 0));
-    }
+    setLevel((prevLevel) => (prevLevel += 1));
   };
 
   return (
