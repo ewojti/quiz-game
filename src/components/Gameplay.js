@@ -19,8 +19,7 @@ const Gameplay = ({
   isEndGame,
   setIsEndGame,
   setGameMode,
-  getChances,
-  setGetChances
+  getChances
 }) => {
   const [questionAnswer, setQuestionAnswer] = useState([]);
   const id = nanoid();
@@ -81,10 +80,15 @@ const Gameplay = ({
         setNextLevel(true);
       } else if (possibleLevels >= level && quest.answer !== selectedAnswer) {
         setRepeatLevel(true);
-        // setGetChances((heart) => heart.filter((_, index) => index !== 0));
+        getChances.pop();
       }
     });
+    isStillChance()
   };
+
+  const isStillChance = () => {
+    if (getChances.length === 0) {setLastLvlAnsw(true)}
+  }
 
   const getPointDifficulty = () => {
     if (difficultyLevel === "easy") {
@@ -152,7 +156,7 @@ const Gameplay = ({
         <RepeatLevelBtn
           getRandomNumbCat={getRandomNumbCat}
           setRepeatLevel={setRepeatLevel}
-          setGetChances={setGetChances}
+          getChances={getChances}
         />
       ) : (
         ""

@@ -4,8 +4,8 @@ export const gameModeData = [
   {
     id: nanoid(),
     name: "choose category",
-    possibleLevels: 2,
-    chance: 2,
+    possibleLevels: 3,
+    chance: 3,
     timeToAnswer: 10000,
     difficulty: "easy",
     type: "boolean",

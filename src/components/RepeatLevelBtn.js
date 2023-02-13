@@ -2,13 +2,11 @@ import React from 'react'
 
 const RepeatLevelBtn = ({
   getRandomNumbCat,
-  setRepeatLevel,
-  setGetChances,
+  setRepeatLevel
 }) => {
   const getAnotherQuest = () => {
     setRepeatLevel(false);
     getRandomNumbCat();
-    // setGetChances((heart) => heart.filter((_, index) => index !== 0));
   };
   return (
     <div>
