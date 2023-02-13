@@ -9,10 +9,10 @@ import RepeatLevelBtn from "./RepeatLevelBtn";
 import Score from "./Score";
 import Health from "./Health";
 import Level from './Level';
-import Difficulty from "./Difficulty";
 
 
 const Gameplay = ({
+  category,
   type,
   possibleLevels,
   difficultyLevel,
@@ -25,19 +25,19 @@ const Gameplay = ({
   const id = nanoid();
   const [amount, setAmount] = useState(1);
   const [nextLevel, setNextLevel] = useState(false);
-  const [randomCategory, setRandomCategory] = useState(26);
+  const [randomCategory, setRandomCategory] = useState(category);
   const [getPoint, setGetPoint] = useState(0);
   const [level, setLevel] = useState(1);
   const [pointDifficulty, setPointDifficulty] = useState(5);
   const [lastLvlAnsw, setLastLvlAnsw] = useState(false);
   const [repeatLevel, setRepeatLevel] = useState(false);
 
-  const fetchQuestionData = async () => {
-    const questionData = await fetchData(
+  const fetchGameplayData = async () => {
+    const gameplayData = await fetchData(
       `https://opentdb.com/api.php?amount=${amount}&category=${randomCategory}&difficulty=${difficultyLevel}&type=${type}`
     );
     setQuestionAnswer(
-      questionData.results.map((questionItem) => {
+      gameplayData.results.map((questionItem) => {
         const answer = questionItem.correct_answer;
         const options = [
           ...questionItem.incorrect_answers.map((incorrect) => incorrect),
@@ -59,10 +59,17 @@ const Gameplay = ({
   };
 
   useEffect(() => {
-    fetchQuestionData();
+    fetchGameplayData();
     getPointDifficulty();
-    console.log(randomCategory);
+    isEmptyData()
+    console.log(randomCategory)
   }, [randomCategory]);
+
+  const isEmptyData = () => {
+    questionAnswer.map(item => (
+      item.length === 0? fetchGameplayData() :console.log('full') 
+    ))
+  }
 
   const handleSelectAnswer = (questionId, selectedAnswer) => {
     setQuestionAnswer((prevQuestionAnswer) =>
@@ -111,7 +118,9 @@ const Gameplay = ({
   };
 
   const getRandomNumbCat = () => {
-    setRandomCategory(Math.floor(Math.random() * 22) + 10);
+    setRandomCategory(Math.floor(Math.random() * 22) + 9);
+    setRandomCategory(13);
+    console.log(questionAnswer)
   };
 
   return (
@@ -122,7 +131,7 @@ const Gameplay = ({
           <p key={id}>{quest.category}</p>
         ))}
         <Level level={level} possibleLevels={possibleLevels} />
-        <Difficulty difficultyLevel={difficultyLevel} />
+        <p>{difficultyLevel}</p>
         <Health getChances={getChances} />
       </div>
       {questionAnswer.map((quest) => (
@@ -144,14 +153,17 @@ const Gameplay = ({
           setLevel={setLevel}
           level={level}
           possibleLevels={possibleLevels}
-          setRandomCategory={setRandomCategory}
           questionAnswer={questionAnswer}
           getPointDifficulty={getPointDifficulty}
           isEndGame={isEndGame}
           getRandomNumbCat={getRandomNumbCat}
         />
       ) : lastLvlAnsw ? (
-        <EndGameBtn setIsEndGame={setIsEndGame} setGameMode={setGameMode} />
+        <EndGameBtn
+          setIsEndGame={setIsEndGame}
+          setGameMode={setGameMode}
+          getChances={getChances}
+        />
       ) : repeatLevel ? (
         <RepeatLevelBtn
           getRandomNumbCat={getRandomNumbCat}

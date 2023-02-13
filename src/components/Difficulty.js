@@ -1,9 +1,14 @@
-import React from 'react'
+import React from 'react';
+import { nanoid } from 'nanoid';
 
-const Difficulty = ({difficultyLevel}) => {
+const Difficulty = ({ difficulty, pickDifficulty }) => {
   return (
-    <div>Difficulty: {difficultyLevel}</div>
-  )
-}
+    <div>
+      {difficulty.map((item) => (
+        <button key={nanoid()} onClick={(e) => pickDifficulty(e)}>{item}</button>
+      ))}
+    </div>
+  );
+};
 
 export default Difficulty

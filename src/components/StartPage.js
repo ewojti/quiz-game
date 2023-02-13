@@ -14,9 +14,8 @@ const StartPage = () => {
       const [difficultyLevel, setDifficultyLevel] = useState();
       const [type, setType] = useState();
       const [isEndGame, setIsEndGame] = useState(false);
-      const [getChances, setGetChances] = useState()
-
-
+      const [getChances, setGetChances] = useState();
+      const [category, setCategory] = useState()
 
   return (
     <div>
@@ -28,6 +27,7 @@ const StartPage = () => {
           setPossibleLevels={setPossibleLevels}
           setDifficultyLevel={setDifficultyLevel}
           setGetChances={setGetChances}
+          setCategory={setCategory}
         />
       ) : (
         ""
@@ -36,6 +36,7 @@ const StartPage = () => {
         <Gameplay
           key={nanoid()}
           type={type}
+          category={category}
           possibleLevels={possibleLevels}
           difficultyLevel={difficultyLevel}
           isEndGame={isEndGame}
