@@ -61,15 +61,13 @@ const Gameplay = ({
   useEffect(() => {
     fetchGameplayData();
     getPointDifficulty();
-    isEmptyData()
-    console.log(randomCategory)
   }, [randomCategory]);
 
-  const isEmptyData = () => {
-    questionAnswer.map(item => (
-      item.length === 0? fetchGameplayData() :console.log('full') 
-    ))
-  }
+  // const isEmptyData = () => {
+  //   questionAnswer.map(item => (
+  //     item.length === 0? fetchGameplayData() :console.log('full') 
+  //   ))
+  // }
 
   const handleSelectAnswer = (questionId, selectedAnswer) => {
     setQuestionAnswer((prevQuestionAnswer) =>
@@ -119,8 +117,6 @@ const Gameplay = ({
 
   const getRandomNumbCat = () => {
     setRandomCategory(Math.floor(Math.random() * 22) + 9);
-    setRandomCategory(13);
-    console.log(questionAnswer)
   };
 
   return (

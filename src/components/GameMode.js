@@ -29,6 +29,7 @@ const GameMode = ({
 
   useEffect(() => {
     fetchQuestionList();
+    console.log(threeRandomCat)
   }, [isGameModeChoosen]);
 
   const getGameMode = () => {
@@ -39,14 +40,12 @@ const GameMode = ({
     const chanceArr = new Array(heart).fill("❤️");
     setGetChances(chanceArr);
   };
+  
+  const [threeRandomCat, setThreeRandomCat] = useState()
 
-  function getMultipleCategories(arr, num) {
-    const shuffled = [...arr].sort(() => 0.5 - Math.random());
-
-    return shuffled.slice(0, num);
+  function getMultipleCategories(state, arr, num) {
+    state(arr.sort(() => 0.5 - Math.random()).slice(0, num));
   }
-
-  const threeRandomCat = getMultipleCategories(categoryList, 3)
 
   const pickGameMode = (on) => {
     stillChance(gameModeData[on].chance);
@@ -55,12 +54,11 @@ const GameMode = ({
     setPossibleLevels(gameModeData[on].possibleLevels);
     setDifficultyLevel(gameModeData[on].difficulty);
     setIsGameModeChoosen(true);
-    // console.log(arrCat)
-    getMultipleCategories(categoryList, 3)
+    getMultipleCategories(setThreeRandomCat, categoryList, 3);
   };
 
   const pickCategory = (e) => {
-    // setIsCategoryChoosen(true);
+    setIsCategoryChoosen(true);
     setCategory(e.target.value);
   };
 
@@ -75,7 +73,6 @@ const GameMode = ({
       {gameModeData.map((item) => (
         <button
           key={nanoid()}
-          id="third"
           onClick={() => pickGameMode(gameModeData.indexOf(item))}
         >
           {item.name}
@@ -85,20 +82,11 @@ const GameMode = ({
       {isGameModeChoosen ? (
         <div>
           <h1>Choose Category</h1>
-          {/* <CategoryList
+          <CategoryList
             pickCategory={pickCategory}
             categoryList={categoryList}
             threeRandomCat={threeRandomCat}
-          /> */}
-          {threeRandomCat.map((cat) => (
-            <button
-              key={nanoid()}
-              value={cat.id}
-              onClick={(e) => pickCategory(e)}
-            >
-              {cat.name}
-            </button>
-          ))}
+          />
         </div>
       ) : (
         ""

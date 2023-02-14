@@ -12,7 +12,8 @@ const CategoryList = ({
   return (
     <div>
       {threeRandomCat.map((cat)=> (
-        <button key={nanoid()}
+        <button 
+        key={nanoid()}
         value={cat.id}
         onClick={(e)=>pickCategory(e)}
         >{cat.name}</button>
