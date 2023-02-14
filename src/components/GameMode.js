@@ -25,7 +25,6 @@ const GameMode = ({
       "https://opentdb.com/api_category.php"
     );
     setCategoryList(categoryData.trivia_categories);
-    console.log(categoryList);
   };
 
   useEffect(() => {
@@ -41,6 +40,14 @@ const GameMode = ({
     setGetChances(chanceArr);
   };
 
+  function getMultipleCategories(arr, num) {
+    const shuffled = [...arr].sort(() => 0.5 - Math.random());
+
+    return shuffled.slice(0, num);
+  }
+
+  const threeRandomCat = getMultipleCategories(categoryList, 3)
+
   const pickGameMode = (on) => {
     stillChance(gameModeData[on].chance);
     setIsGameModeData(true);
@@ -48,10 +55,12 @@ const GameMode = ({
     setPossibleLevels(gameModeData[on].possibleLevels);
     setDifficultyLevel(gameModeData[on].difficulty);
     setIsGameModeChoosen(true);
+    // console.log(arrCat)
+    getMultipleCategories(categoryList, 3)
   };
 
   const pickCategory = (e) => {
-    setIsCategoryChoosen(true);
+    // setIsCategoryChoosen(true);
     setCategory(e.target.value);
   };
 
@@ -76,10 +85,20 @@ const GameMode = ({
       {isGameModeChoosen ? (
         <div>
           <h1>Choose Category</h1>
-          <CategoryList
+          {/* <CategoryList
             pickCategory={pickCategory}
             categoryList={categoryList}
-          />
+            threeRandomCat={threeRandomCat}
+          /> */}
+          {threeRandomCat.map((cat) => (
+            <button
+              key={nanoid()}
+              value={cat.id}
+              onClick={(e) => pickCategory(e)}
+            >
+              {cat.name}
+            </button>
+          ))}
         </div>
       ) : (
         ""

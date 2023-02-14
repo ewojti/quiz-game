@@ -1,17 +1,25 @@
-import React from 'react';
-import { nanoid } from 'nanoid';
+import React from "react";
+import { nanoid } from "nanoid";
 
-const CategoryList = ({ categoryList, pickCategory }) => {
+const CategoryList = ({
+  categoryList,
+  pickCategory,
+  threeRandomCat,
+  category,
+}) => {
+
+
   return (
     <div>
-      {categoryList.map((item) => (
-        <button key={nanoid()} value={item.id} onClick={(e) => pickCategory(e)}>
-          {item.name}
-        </button>
+      {threeRandomCat.map((cat)=> (
+        <button key={nanoid()}
+        value={cat.id}
+        onClick={(e)=>pickCategory(e)}
+        >{cat.name}</button>
       ))}
-      <button>RANDOM CATEGORY</button>
+
     </div>
   );
 };
 
-export default CategoryList
+export default CategoryList;

@@ -3,7 +3,7 @@ import { nanoid } from "nanoid";
 export const gameModeData = [
   {
     id: nanoid(),
-    name: "choose category",
+    name: "Your prefer",
     possibleLevels: 20,
     chance: 3,
     timeToAnswer: 10000,
@@ -11,15 +11,15 @@ export const gameModeData = [
   },
   {
     id: nanoid(),
-    name: "fast 10 truthy/falsy",
+    name: "Fast 10 truthy/falsy",
     possibleLevels: 10,
     chance: 1,
     timeToAnswer: 11000,
-    type: "multiple",
+    type: "boolean",
   },
   {
     id: nanoid(),
-    name: "hard",
+    name: "Calssic",
     possibleLevels: 10,
     chance: 2,
     timeToAnswer: 12000,
