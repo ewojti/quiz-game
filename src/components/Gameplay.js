@@ -5,6 +5,7 @@ import { nanoid } from "nanoid";
 import Options from "./Options";
 import NextLevelBtn from "./NextLevelBtn";
 import EndGameBtn from "./EndGameBtn";
+import CategoryList from "./CategoryList";
 import RepeatLevelBtn from "./RepeatLevelBtn";
 import Score from "./Score";
 import Health from "./Health";
@@ -130,6 +131,7 @@ const Gameplay = ({
         <p>{difficultyLevel}</p>
         <Health getChances={getChances} />
       </div>
+      <CategoryList />
       {questionAnswer.map((quest) => (
         <p key={id}>{quest.question}</p>
       ))}

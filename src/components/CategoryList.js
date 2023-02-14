@@ -11,14 +11,16 @@ const CategoryList = ({
 
   return (
     <div>
-      {threeRandomCat.map((cat)=> (
-        <button 
-        key={nanoid()}
-        value={cat.id}
-        onClick={(e)=>pickCategory(e)}
-        >{cat.name}</button>
+      {threeRandomCat.map((cat) => (
+        <button key={nanoid()} value={cat.id} onClick={(e) => pickCategory(e)}>
+          {cat.name}
+        </button>
       ))}
-
+      {/* {categoryList.map((cat) => (
+        <button key={nanoid()} value={cat.id} onClick={(e) => pickCategory(e)}>
+          {cat.name}
+        </button>
+      ))} */}
     </div>
   );
 };

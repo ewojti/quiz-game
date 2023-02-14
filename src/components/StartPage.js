@@ -10,6 +10,7 @@ const StartPage = () => {
       const [startGame, setStartGame] = useState(false);
       const [isGameModeData, setIsGameModeData] = useState(false)
       const [gameMode, setGameMode] = useState(false);
+      const [gameModeType, setGameModeType] = useState()
       const [possibleLevels, setPossibleLevels] = useState(5);
       const [difficultyLevel, setDifficultyLevel] = useState();
       const [type, setType] = useState();
@@ -28,6 +29,7 @@ const StartPage = () => {
           setDifficultyLevel={setDifficultyLevel}
           setGetChances={setGetChances}
           setCategory={setCategory}
+          setGameModeType={setGameModeType}
         />
       ) : (
         ""

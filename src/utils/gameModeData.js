@@ -8,6 +8,8 @@ export const gameModeData = [
     chance: 3,
     timeToAnswer: 10000,
     type: "boolean",
+    chosen: false,
+    randomCategory: 3,
   },
   {
     id: nanoid(),
@@ -16,6 +18,7 @@ export const gameModeData = [
     chance: 1,
     timeToAnswer: 11000,
     type: "boolean",
+    randomCategory: 1,
   },
   {
     id: nanoid(),
@@ -24,5 +27,6 @@ export const gameModeData = [
     chance: 2,
     timeToAnswer: 12000,
     type: "multiple",
+    randomCategory: 3,
   },
 ];

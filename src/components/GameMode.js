@@ -11,6 +11,7 @@ const GameMode = ({
   setCategory,
   setType,
   setGameMode,
+  setGameModeType,
   setPossibleLevels,
   setGetChances,
 }) => {
@@ -53,6 +54,7 @@ const GameMode = ({
     setType(gameModeData[on].type);
     setPossibleLevels(gameModeData[on].possibleLevels);
     setDifficultyLevel(gameModeData[on].difficulty);
+    setGameModeType(gameModeData[on].name)
     setIsGameModeChoosen(true);
     getMultipleCategories(setThreeRandomCat, categoryList, 3);
   };
