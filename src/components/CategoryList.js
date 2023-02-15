@@ -2,10 +2,9 @@ import React from "react";
 import { nanoid } from "nanoid";
 
 const CategoryList = ({
-  categoryList,
+  categorList,
   pickCategory,
   threeRandomCat,
-  category,
 }) => {
 
 

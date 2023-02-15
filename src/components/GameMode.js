@@ -8,7 +8,6 @@ import Difficulty from "./Difficulty";
 const GameMode = ({
   setIsGameModeData,
   setDifficultyLevel,
-  setCategory,
   setType,
   setGameMode,
   setGameModeType,
@@ -16,7 +15,6 @@ const GameMode = ({
   setGetChances,
 }) => {
   const [isGameModeChoosen, setIsGameModeChoosen] = useState(false);
-  const [isCategoryChoosen, setIsCategoryChoosen] = useState(false);
   const [isDifficultyChoosen, setIsDifficultyChoosen] = useState(false);
   const [categoryList, setCategoryList] = useState([]);
   const difficulty = ["easy", "medium", "hard", "random"];
@@ -30,7 +28,6 @@ const GameMode = ({
 
   useEffect(() => {
     fetchQuestionList();
-    console.log(threeRandomCat)
   }, [isGameModeChoosen]);
 
   const getGameMode = () => {
@@ -42,11 +39,7 @@ const GameMode = ({
     setGetChances(chanceArr);
   };
   
-  const [threeRandomCat, setThreeRandomCat] = useState()
 
-  function getMultipleCategories(state, arr, num) {
-    state(arr.sort(() => 0.5 - Math.random()).slice(0, num));
-  }
 
   const pickGameMode = (on) => {
     stillChance(gameModeData[on].chance);
@@ -55,14 +48,10 @@ const GameMode = ({
     setPossibleLevels(gameModeData[on].possibleLevels);
     setDifficultyLevel(gameModeData[on].difficulty);
     setGameModeType(gameModeData[on].name)
-    setIsGameModeChoosen(true);
-    getMultipleCategories(setThreeRandomCat, categoryList, 3);
+    setIsGameModeChoosen(true)
   };
 
-  const pickCategory = (e) => {
-    setIsCategoryChoosen(true);
-    setCategory(e.target.value);
-  };
+
 
   const pickDifficulty = (e) => {
     setIsDifficultyChoosen(true);
@@ -80,20 +69,7 @@ const GameMode = ({
           {item.name}
         </button>
       ))}
-
       {isGameModeChoosen ? (
-        <div>
-          <h1>Choose Category</h1>
-          <CategoryList
-            pickCategory={pickCategory}
-            categoryList={categoryList}
-            threeRandomCat={threeRandomCat}
-          />
-        </div>
-      ) : (
-        ""
-      )}
-      {isCategoryChoosen ? (
         <div>
           <h1>Choose difficulty level</h1>
           <Difficulty difficulty={difficulty} pickDifficulty={pickDifficulty} />

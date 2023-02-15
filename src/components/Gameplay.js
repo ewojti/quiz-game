@@ -3,9 +3,9 @@ import { fetchData } from "../utils/fetchData";
 import { gameModeData } from '../utils/gameModeData';
 import { nanoid } from "nanoid";
 import Options from "./Options";
+import CategoryList from "./CategoryList";
 import NextLevelBtn from "./NextLevelBtn";
 import EndGameBtn from "./EndGameBtn";
-import CategoryList from "./CategoryList";
 import RepeatLevelBtn from "./RepeatLevelBtn";
 import Score from "./Score";
 import Health from "./Health";
@@ -13,25 +13,27 @@ import Level from './Level';
 
 
 const Gameplay = ({
-  category,
   type,
   possibleLevels,
   difficultyLevel,
   isEndGame,
   setIsEndGame,
   setGameMode,
-  getChances
+  getChances,
 }) => {
   const [questionAnswer, setQuestionAnswer] = useState([]);
   const id = nanoid();
   const [amount, setAmount] = useState(1);
   const [nextLevel, setNextLevel] = useState(false);
+  const [category, setCategory] = useState(9);
   const [randomCategory, setRandomCategory] = useState(category);
   const [getPoint, setGetPoint] = useState(0);
   const [level, setLevel] = useState(1);
   const [pointDifficulty, setPointDifficulty] = useState(5);
   const [lastLvlAnsw, setLastLvlAnsw] = useState(false);
   const [repeatLevel, setRepeatLevel] = useState(false);
+  const [isCategoryChoosen, setIsCategoryChoosen] = useState(false);
+  const [categorList, setCategorList] = useState([]);
 
   const fetchGameplayData = async () => {
     const gameplayData = await fetchData(
@@ -59,14 +61,26 @@ const Gameplay = ({
     );
   };
 
+  const fetchQuestionLis = async () => {
+    const categorData = await fetchData("https://opentdb.com/api_category.php");
+    setCategorList(categorData.trivia_categories);
+    getMultipleCategories(setThreeRandomCat, categorList, 3);
+  };
+
   useEffect(() => {
+    fetchQuestionLis();
+    console.log(categorList)
+    console.log(threeRandomCat)
+
     fetchGameplayData();
+    console.log(questionAnswer)
     getPointDifficulty();
-  }, [randomCategory]);
+  }, []);
+
 
   // const isEmptyData = () => {
   //   questionAnswer.map(item => (
-  //     item.length === 0? fetchGameplayData() :console.log('full') 
+  //     item.length === 0? fetchGameplayData() :console.log('full')
   //   ))
   // }
 
@@ -89,12 +103,14 @@ const Gameplay = ({
         getChances.pop();
       }
     });
-    isStillChance()
+    isStillChance();
   };
 
   const isStillChance = () => {
-    if (getChances.length === 0) {setLastLvlAnsw(true)}
-  }
+    if (getChances.length === 0) {
+      setLastLvlAnsw(true);
+    }
+  };
 
   const getPointDifficulty = () => {
     if (difficultyLevel === "easy") {
@@ -120,56 +136,78 @@ const Gameplay = ({
     setRandomCategory(Math.floor(Math.random() * 22) + 9);
   };
 
+  const [threeRandomCat, setThreeRandomCat] = useState();
+
+  function getMultipleCategories(state, arr, num) {
+    state(arr.sort(() => 0.5 - Math.random()).slice(0, num));
+  }
+  const pickCategory = (e) => {
+    setIsCategoryChoosen(true);
+    setCategory(e.target.value);
+  };
+
   return (
     <div>
-      <div>
-        <Score key={nanoid()} getPoint={getPoint} />
-        {questionAnswer.map((quest) => (
-          <p key={id}>{quest.category}</p>
-        ))}
-        <Level level={level} possibleLevels={possibleLevels} />
-        <p>{difficultyLevel}</p>
-        <Health getChances={getChances} />
-      </div>
-      <CategoryList />
-      {questionAnswer.map((quest) => (
-        <p key={id}>{quest.question}</p>
-      ))}
-      {questionAnswer.map((item) => {
-        return (
-          <Options
-            item={item}
-            key={nanoid()}
-            handleSelectAnswer={handleSelectAnswer}
-            setNextLevel={setNextLevel}
+      {!isCategoryChoosen ? (
+        <div>
+          <h1>Choose Category</h1>
+          <CategoryList
+            pickCategory={pickCategory}
+            categorList={categorList}
+            threeRandomCat={threeRandomCat}
           />
-        );
-      })}
-      {nextLevel ? (
-        <NextLevelBtn
-          setNextLevel={setNextLevel}
-          setLevel={setLevel}
-          level={level}
-          possibleLevels={possibleLevels}
-          questionAnswer={questionAnswer}
-          getPointDifficulty={getPointDifficulty}
-          isEndGame={isEndGame}
-          getRandomNumbCat={getRandomNumbCat}
-        />
-      ) : lastLvlAnsw ? (
-        <EndGameBtn
-          setIsEndGame={setIsEndGame}
-          setGameMode={setGameMode}
-          getChances={getChances}
-        />
-      ) : repeatLevel ? (
-        <RepeatLevelBtn
-          getRandomNumbCat={getRandomNumbCat}
-          setRepeatLevel={setRepeatLevel}
-          getChances={getChances}
-        />
+        </div>
       ) : (
-        ""
+        <div>
+          <div>
+            <Score key={nanoid()} getPoint={getPoint} />
+            {questionAnswer.map((quest) => (
+              <p key={id}>{quest.category}</p>
+            ))}
+            <Level level={level} possibleLevels={possibleLevels} />
+            <p>{difficultyLevel}</p>
+            <Health getChances={getChances} />
+          </div>
+          {questionAnswer.map((quest) => (
+            <p key={id}>{quest.question}</p>
+          ))}
+          {questionAnswer.map((item) => {
+            return (
+              <Options
+                item={item}
+                key={nanoid()}
+                handleSelectAnswer={handleSelectAnswer}
+                setNextLevel={setNextLevel}
+              />
+            );
+          })}
+          {nextLevel ? (
+            <NextLevelBtn
+              setNextLevel={setNextLevel}
+              setLevel={setLevel}
+              level={level}
+              possibleLevels={possibleLevels}
+              questionAnswer={questionAnswer}
+              getPointDifficulty={getPointDifficulty}
+              isEndGame={isEndGame}
+              getRandomNumbCat={getRandomNumbCat}
+            />
+          ) : lastLvlAnsw ? (
+            <EndGameBtn
+              setIsEndGame={setIsEndGame}
+              setGameMode={setGameMode}
+              getChances={getChances}
+            />
+          ) : repeatLevel ? (
+            <RepeatLevelBtn
+              getRandomNumbCat={getRandomNumbCat}
+              setRepeatLevel={setRepeatLevel}
+              getChances={getChances}
+            />
+          ) : (
+            ""
+          )}
+        </div>
       )}
     </div>
   );
