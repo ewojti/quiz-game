@@ -9,7 +9,8 @@ const GameMode = ({
   setType,
   setGameMode,
   setPossibleLevels,
-  setGetChances
+  setGetChances,
+  setAmount
 }) => {
   const getGameMode = () => {
     setGameMode(true);
@@ -27,6 +28,7 @@ const GameMode = ({
     setType(gameModeData[on].type);
     setPossibleLevels(gameModeData[on].possibleLevels);
     setDifficultyLevel(gameModeData[on].difficulty);
+    setAmount(gameModeData[on].amount)
     getGameMode();
   };
 

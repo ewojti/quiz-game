@@ -19,11 +19,10 @@ const Gameplay = ({
   isEndGame,
   setIsEndGame,
   setGameMode,
-  getChances
+  getChances,
+  amount
 }) => {
   const [questionAnswer, setQuestionAnswer] = useState([]);
-  const id = nanoid();
-  const [amount, setAmount] = useState(1);
   const [nextLevel, setNextLevel] = useState(false);
   const [randomCategory, setRandomCategory] = useState(26);
   const [getPoint, setGetPoint] = useState(0);
@@ -118,16 +117,10 @@ const Gameplay = ({
     <div>
       <div>
         <Score key={nanoid()} getPoint={getPoint} />
-        {questionAnswer.map((quest) => (
-          <p key={id}>{quest.category}</p>
-        ))}
         <Level level={level} possibleLevels={possibleLevels} />
         <Difficulty difficultyLevel={difficultyLevel} />
         <Health getChances={getChances} />
       </div>
-      {questionAnswer.map((quest) => (
-        <p key={id}>{quest.question}</p>
-      ))}
       {questionAnswer.map((item) => {
         return (
           <Options

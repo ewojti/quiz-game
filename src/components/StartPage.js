@@ -13,6 +13,8 @@ const StartPage = () => {
       const [possibleLevels, setPossibleLevels] = useState(5);
       const [difficultyLevel, setDifficultyLevel] = useState();
       const [type, setType] = useState();
+      const [amount, setAmount] = useState(3);
+
       const [isEndGame, setIsEndGame] = useState(false);
       const [getChances, setGetChances] = useState()
 
@@ -28,6 +30,7 @@ const StartPage = () => {
           setPossibleLevels={setPossibleLevels}
           setDifficultyLevel={setDifficultyLevel}
           setGetChances={setGetChances}
+          setAmount={setAmount}
         />
       ) : (
         ""
@@ -44,6 +47,7 @@ const StartPage = () => {
           setGameMode={setGameMode}
           getChances={getChances}
           setGetChances={setGetChances}
+          amount={amount}
         />
       ) : isGameModeData === false && startGame === false ? (
         <Menu setStartGame={setStartGame} />

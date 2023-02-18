@@ -1,4 +1,5 @@
-import React, {useState} from 'react'
+import React, {useState} from 'react';
+import OptionsList from './OptionsList';
 import { nanoid } from 'nanoid';
 
 const Options = ({
@@ -6,17 +7,17 @@ const Options = ({
   handleSelectAnswer
 }) => {
 
-  const answerElements = item.options.map((option) => (
-    <button key={nanoid()} onClick={()=>handleSelectAnswer(item.id, option)}
-    className={`answ ${item.selectedAnswer === option ? "answ-selected disabled" : ""}
-      ${item.showAnswer && item.selectedAnswer === item.answer? "answ-correct disabled" : "" }
-      ${item.showAnswer && item.selectedAnswer !== item.answer? "answ-incorrect disabled" : ""}
-      ${item.showAnswer && item.answer === option && item.selectedAnswer !== item.answer ? "answ-show-correct disabled" : ""}
-      `}>
-      {option}
-    </button>
-  ));
-  return <div>{answerElements}</div>;
+  return (
+    <div>
+      <p key={nanoid()}>{item.category}</p>
+      <p key={nanoid()}>{item.question}</p>
+      <OptionsList
+        item={item}
+        key={nanoid()}
+        handleSelectAnswer={handleSelectAnswer}
+      />
+    </div>
+  );
 };
 
 export default Options
