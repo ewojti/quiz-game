@@ -1,14 +1,8 @@
 import React from 'react'
-import { nanoid } from 'nanoid';
 
-const Health = ({getChances}) => {
+const Health = () => {
   return (
-    <div>
-      Health:
-      {getChances.map((heart) => (
-        <div key={nanoid()}>{heart}</div>
-      ))}
-    </div>
+<div></div>
   );
 }
 

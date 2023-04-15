@@ -10,7 +10,9 @@ const RepeatLevelBtn = ({
   };
   return (
     <div>
-      <button onClick={() => getAnotherQuest()}>Another Question</button>
+      <button className="custom__button" onClick={() => getAnotherQuest()}>
+        Another Question
+      </button>
     </div>
   );
 };

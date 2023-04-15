@@ -4,7 +4,7 @@ import NewGameBtn from './NewGameBtn';
 const GameOver = () => {
   return (
     <div>
-      <h1>GameOver</h1>
+      <h1 className="headtext__h1">Game Over</h1>
       <NewGameBtn />
     </div>
   );

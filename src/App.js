@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
-import StartPage from "./components/StartPage";
+import MainPage from "./components/MainPage";
 import './App.css'
 
 const App = () => {
-  return <div>
-    <StartPage />
-    </div>;
+  return (
+    <div className="container">
+      <MainPage />
+    </div>
+  );
 };
 
 export default App;

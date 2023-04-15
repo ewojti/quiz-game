@@ -1,26 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { fetchData } from "../utils/fetchData";
-import { gameModeData } from '../utils/gameModeData';
+import { gameModeData } from "../utils/gameModeData";
 import { nanoid } from "nanoid";
 import Options from "./Options";
-import NextLevelBtn from "./NextLevelBtn";
-import EndGameBtn from "./EndGameBtn";
-import RepeatLevelBtn from "./RepeatLevelBtn";
 import Score from "./Score";
-import Health from "./Health";
-import Level from './Level';
+import Level from "./Level";
 import Difficulty from "./Difficulty";
-
 
 const Gameplay = ({
   type,
   possibleLevels,
   difficultyLevel,
-  isEndGame,
   setIsEndGame,
   setGameMode,
   getChances,
-  amount
+  amount,
 }) => {
   const [questionAnswer, setQuestionAnswer] = useState([]);
   const [nextLevel, setNextLevel] = useState(false);
@@ -60,7 +54,6 @@ const Gameplay = ({
   useEffect(() => {
     fetchQuestionData();
     getPointDifficulty();
-    console.log(randomCategory);
   }, [randomCategory]);
 
   const handleSelectAnswer = (questionId, selectedAnswer) => {
@@ -82,21 +75,25 @@ const Gameplay = ({
         getChances.pop();
       }
     });
-    isStillChance()
+    isStillChance();
   };
 
   const isStillChance = () => {
-    if (getChances.length === 0) {setLastLvlAnsw(true)}
-  }
+    if (getChances.length === 0) {
+      setLastLvlAnsw(true);
+    }
+  };
 
   const getPointDifficulty = () => {
-    if (difficultyLevel === "easy") {
-      setPointDifficulty(5);
-    } else if (difficultyLevel === "medium") {
-      setPointDifficulty(10);
-    } else {
+    switch (difficultyLevel){
+    case "easy":
+      return setPointDifficulty(5);
+    case "medium":
+      return setPointDifficulty(10);
+      default: 
       setPointDifficulty(15);
-    }
+      break;
+   }
   };
 
   const score = (selected, point) => {
@@ -113,47 +110,71 @@ const Gameplay = ({
     setRandomCategory(Math.floor(Math.random() * 22) + 10);
   };
 
+  const getNextLevel = () => {
+    setNextLevel(false);
+    getRandomNumbCat();
+    setLevel((prevLevel) => (prevLevel += 1));
+  };
+
+  const getEndGame = () => {
+    setGameMode(false);
+    setIsEndGame(true);
+  };
+
+  const getAnotherQuest = () => {
+    setRepeatLevel(false);
+    getRandomNumbCat();
+  };
+
   return (
-    <div>
+    <div className="container">
       <div>
         <Score key={nanoid()} getPoint={getPoint} />
         <Level level={level} possibleLevels={possibleLevels} />
         <Difficulty difficultyLevel={difficultyLevel} />
-        <Health getChances={getChances} />
+        <div className="health">
+          Health:
+          {getChances.map((heart) => (
+            <div key={nanoid()}>{heart}</div>
+          ))}
+        </div>
       </div>
-      {questionAnswer.map((item) => {
-        return (
-          <Options
-            item={item}
-            key={nanoid()}
-            handleSelectAnswer={handleSelectAnswer}
-            setNextLevel={setNextLevel}
-          />
-        );
-      })}
-      {nextLevel ? (
-        <NextLevelBtn
-          setNextLevel={setNextLevel}
-          setLevel={setLevel}
-          level={level}
-          possibleLevels={possibleLevels}
-          setRandomCategory={setRandomCategory}
-          questionAnswer={questionAnswer}
-          getPointDifficulty={getPointDifficulty}
-          isEndGame={isEndGame}
-          getRandomNumbCat={getRandomNumbCat}
-        />
-      ) : lastLvlAnsw ? (
-        <EndGameBtn setIsEndGame={setIsEndGame} setGameMode={setGameMode} />
-      ) : repeatLevel ? (
-        <RepeatLevelBtn
-          getRandomNumbCat={getRandomNumbCat}
-          setRepeatLevel={setRepeatLevel}
-          getChances={getChances}
-        />
-      ) : (
-        ""
-      )}
+      <div className="container__question flexColumn__center">
+        {questionAnswer.map((item) => {
+          return (
+            <Options
+              item={item}
+              key={nanoid()}
+              handleSelectAnswer={handleSelectAnswer}
+              setNextLevel={setNextLevel}
+            />
+          );
+        })}
+        {nextLevel ? (
+          <button
+            className="custom__button wobble-hor-bottom"
+            onClick={() => getNextLevel()}
+          >
+            Next Level
+          </button>
+        ) : lastLvlAnsw ? (
+          <button
+            className="custom__button wobble-hor-bottom"
+            onClick={() => getEndGame()}
+          >
+            End Game
+          </button>
+        ) : repeatLevel ? (
+          <button
+            className="custom__button wobble-hor-bottom"
+            onClick={() => getAnotherQuest()}
+          >
+            Another Question
+          </button>
+        ) : (
+          ""
+        )}
+      </div>
     </div>
   );
 };

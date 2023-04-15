@@ -3,13 +3,13 @@ import { nanoid } from "nanoid";
 export const gameModeData = [
   {
     id: nanoid(),
-    name: "choose category",
+    name: "random category",
     possibleLevels: 3,
     chance: 3,
     timeToAnswer: 10000,
     difficulty: "easy",
     amount: 1,
-    type: "boolean",
+    type: "multiple",
   },
   {
     id: nanoid(),
@@ -20,15 +20,5 @@ export const gameModeData = [
     timeToAnswer: 11000,
     difficulty: "medium",
     type: "boolean",
-  },
-  {
-    id: nanoid(),
-    name: "",
-    possibleLevels: 10,
-    chance: 2,
-    amount: 3,
-    timeToAnswer: 12000,
-    difficulty: "hard",
-    type: "multiple",
   },
 ];

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {gameModeData} from '../utils/gameModeData';
 import { nanoid } from "nanoid";
 
@@ -33,18 +33,20 @@ const GameMode = ({
   };
 
   return (
-    <div>
-      <h1>Choose GameMode</h1>
-      {gameModeData.map((item) => (
-        <button
-          key={nanoid()}
-          id="third"
-          onClick={() => pickGameMode(gameModeData.indexOf(item))}
-        >
-          {item.name}
-        </button>
-      ))}
-    </div>
+    <>
+      <h1 className="headtext__h1">Choose game mode</h1>
+      <div className="flex__center">
+        {gameModeData.map((item) => (
+          <button
+            key={nanoid()}
+            onClick={() => pickGameMode(gameModeData.indexOf(item))}
+            className="custom__button"
+          >
+            {item.name}
+          </button>
+        ))}
+      </div>
+    </>
   );
 };
 

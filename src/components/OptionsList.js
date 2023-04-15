@@ -35,7 +35,7 @@ const OptionsList = ({item, handleSelectAnswer}) => {
         </button>
       ));
   return (
-    <div>{answerElements}</div>
+    <div className='flex__center'>{answerElements}</div>
   )
 }
 
