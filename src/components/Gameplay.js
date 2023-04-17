@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { fetchData } from "../utils/fetchData";
-import { gameModeData } from "../utils/gameModeData";
 import { nanoid } from "nanoid";
 import Options from "./Options";
 import Score from "./Score";
@@ -152,21 +151,21 @@ const Gameplay = ({
         })}
         {nextLevel ? (
           <button
-            className="custom__button wobble-hor-bottom"
+            className="custom__button heartbeat"
             onClick={() => getNextLevel()}
           >
             Next Level
           </button>
         ) : lastLvlAnsw ? (
           <button
-            className="custom__button wobble-hor-bottom"
+            className="custom__button heartbeat"
             onClick={() => getEndGame()}
           >
             End Game
           </button>
         ) : repeatLevel ? (
           <button
-            className="custom__button wobble-hor-bottom"
+            className="custom__button heartbeat"
             onClick={() => getAnotherQuest()}
           >
             Another Question
